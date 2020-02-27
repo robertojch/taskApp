@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#09349D">
+  
+    <span class="navbar-brand"> {{ title }}</span>
+   
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul *ngIf="authService.isAuthenticated()" class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <span class="nav-link" href="#">Welcome {{authService.user.username}} <span
+                        class="sr-only">(current)</span></span>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav navbar-right">
+            <!--<li *ngIf="!authService.isAuthenticated()"><a [routerLink]="['/login']" class="btn btn-outline-primary">Sign In</a></li>-->
+            <li>
+                <button *ngIf="authService.isAuthenticated()" class="btn btn-sm btn-sign-out" 
+                    (click)="logout()" type="button">Sign Out</button>
+            </li>
+        </ul>
+    </div>
+</nav>

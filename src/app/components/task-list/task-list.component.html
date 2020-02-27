@@ -1,0 +1,27 @@
+<input type="text" class="task-list__input" placeholder="Add a new task" [(ngModel)]="taskDescription"
+    (keyup.enter)="addTask()">
+<div class="task-list__body"> 
+    <div class="task-list__item" *ngFor="let task of taskService.taskList()" @fade>
+        <div class="task-item-left">
+           <label class="checkbox-container">
+            <input type="checkbox" [(ngModel)]="task.status" (change)="updateTask(task)">
+            <span class="checkmark"></span>
+               
+           </label>
+                <div *ngIf="!task.editing; else editTaskMode" class="task-list__item__label" [ngClass]="{ 'completed' : task.status }"
+                    (click)="editMode(task)">{{ task.description }}</div>
+                <ng-template #editTaskMode>
+                    <input type="text" class="task-list__item--edit" [(ngModel)]="task.description" (blur)="updateTask(task)"
+                        (keyup.enter)="updateTask(task)" (keyup.esc)="cancelEdit(task)" autofocus>
+                </ng-template>
+        </div>
+        <div class="task-list__item--remove" (click)="taskService.deleteTask(task.id)" title="delete">
+            <svg fill="#7637e3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18px" height="18px" title="delete task" >
+                <path
+                    d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z" />
+                </svg>
+        </div>
+    </div>
+    
+</div>
+
